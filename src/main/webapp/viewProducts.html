@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $(function(){
+           
+            $("#main-btn").click(function() {
+            url='ProductControllerServlet';
+            fetch(url);
+            })
+            $("#prev-btn").click(function() {
+            url='ProductControllerServlet?go=prev';
+            fetch(url);
+            })
+            $("#next-btn").click(function() {
+            url='ProductControllerServlet?go=next';
+            fetch(url);
+            })
+           
+                function fetch(url){
+            	$('.hide').remove();
+                    $.ajax({
+                        url : url,
+                        type : "GET",
+                        datatype : "json",
+                        timeout : 3000, 
+                        beforeSend : function(){},
+                        complete: function(){},
+                        success: function(response){
+                        for(var i=0;i<response.length;i++){
+                            var row=$("<tr>");
+                            var a=$("<td>").text(response[i].id);
+                            var b=$("<td>").text(response[i].name);
+                            var c=$("<td>").text(response[i].price);
+                            var d=$("<td>").text(response[i].quantity);
+                            
+                            row.append(a);
+                            row.append(b);
+                            row.append(c);
+                            row.append(d);
+                            $("#tbl").append(row);
+                        }
+                        }
+                    })
+                }
+               
+                
+            });     
+        </script>
+ </head>
+<body>
+<div style="text-align:center">
+<button type="button" id="main-btn" class="btn btn-block btn-primary" width:100%>Start browsing products</button>
+<table id="tbl" class="table table-dark">
+  <thead>
+    <tr>
+      <th >ID</th>
+      <th >Name</th>
+      <th >Price</th>
+      <th >Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+  </table>
+  <button id="prev-btn"; return false;" class="previous round" >&#8249;</button>
+<button id="next-btn"; return false;" class="next round">&#8250;</button>
+</div>
+</body>
+</html>
